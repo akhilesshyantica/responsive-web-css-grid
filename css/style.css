@@ -1,0 +1,350 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+img{
+    width: 100%;
+}
+
+body{
+    background-color: #ddd;
+    font-size: 18px;
+    font-family: 'Montserrat',Arial, Helvetica, sans-serif;
+    margin: 50px;
+}
+
+
+/* CONTAINER */
+.container{
+    display: grid;
+    gap: 10px;
+}
+
+
+/* HEADER */
+
+.header{
+    display: grid;
+    grid-template-areas: 
+            'hero hero feature-1'
+            'hero hero feature-2';
+}
+
+.hero{
+    grid-area: hero;
+    min-height: 300px;
+    background-image: url(../img/pxfuel_resize.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 50px;
+}
+
+/* .hero h2, .hero p juga bisa ditulis .hero > * */
+.hero h2, .hero p{
+    display: none;
+}
+/* kita hilangkan dulu tullisannya mula-mula, dan nanti
+akan kita munculkan di lebar2 tertentu */
+
+
+.features {
+    background-color: black;
+    color: white;
+    /* kita buat tulisannya ada di tengah */
+    display: grid;
+    /* justify-content: center;
+    align-content: center; */
+    place-content: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.feature-1{
+    grid-area: feature-1;
+    background-image: url(../img/controller_resize.jpg);
+    background-size: cover;
+}
+.feature-2{
+    grid-area: feature-2;
+    background-image: url(../img/ps5_resize.webp);
+    background-size: cover;
+}
+
+.features .price{
+    font-size: 2em;
+    /* 2em artinya 2x nya dari 18px (yg sudah kita definisikan) */
+    font-weight: 200;
+}
+
+
+/* NAVIGASI*/
+
+.menu{
+    order: -1;
+    display: grid;
+    /* ingat karena di menu, ada nama brand dan navigasi,
+    maka kita buat display grid */
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    /* kita buat agar di tengah dgn align items center */
+    background-color: rgb(226, 236, 30);
+}
+
+.menu .brand{
+    font-size: 1.3em;
+    /* artinya besarnya 1.3x dari 18px */
+    color: #333;
+}
+
+.menu ul{
+    list-style: none;
+    /* menu ul kita buat grid juga agar 
+    dapat kita atur dan juga menjadi responsive */
+    display: grid;
+    /* kita gunakan repeat agar responsive.
+    pahami dan ingat baik-baik ini krn akan sering kita gunakan. */
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5px;
+}
+
+.menu a{
+    display: block;
+    /* display block agar jika kita ingin klik, tidak harus di teks nya */
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    padding: 5px;
+    text-transform: uppercase;
+    font-size: .9em;
+}
+
+
+/* HAMBURGER MENU */
+.menu-toggle {
+    display: none;
+    /* kalau dilebar normal, kita beri displaynya none.
+    tapi nanti kita berikan display di media querynya */
+    flex-direction: column;
+    /* flex direction untuk mengatur arah dari elemen elemen di dalam containernya. 
+    column artinya atur arah dari atas ke bawah, 
+    kita atur 3 span berurutan dari atas ke bawah*/
+    height: 20px;
+    /* height 20px agar span didalamnya punya jarak */
+    justify-content: space-between;
+    /* kita atur 3 span didalamnya dgn space between */
+    position: relative;
+    /* karena input checkbox kita buat absolute, 
+    maka menu toggle sbg parent harus kita jadikan relative. */
+    z-index: 999;
+}
+
+
+/* ini untuk input type checkbox */
+.menu-toggle input{
+    position: absolute;
+    width: 40px;
+    height: 28px;
+    /* width dan height untuk mengatur
+    ukuran checkboxnya */
+    opacity: 0;
+    /* kita buat transparan */
+    left: -5px;
+    top: -5px;
+    /* kita atur posisinya */
+    cursor: pointer;
+    /* kita ubah mouse nya agar ada feedbacknya */
+    z-index: 2;
+    /* kita letakan checkbox di paling depan dalam
+    class menu toggle dgn z-index */
+}
+
+.menu-toggle span{
+    display: block;
+    /* ingat nilai default display span adalah inline.
+    jadi kita ubah ke block */
+    width: 28px;
+    height: 3px;
+    background-color: #000;
+    border-radius: 3px;
+    transition: all 0.5s;
+    /* transition ini untuk animasi pada class
+    menu toggle span */
+}
+
+
+/* hamburger menu animation */
+
+/* kita buat animasi spannya saat diklik. */
+
+.menu-toggle span:nth-child(2){
+    transform-origin: 0 0;
+    /* transform origin untuk mengubah poros dari gerakan
+    transform rotate, karena defaultnya kan ada di tengah */
+    /* sumbu x - y . karena kita mau di atas kiri, jadi kita 
+    beri x nya 0 dan y nya juga 0*/
+    /* transform origin diperlukan jika kita ingin muterin poros
+    dari suatu elemen */
+}
+.menu-toggle span:nth-child(4){
+    transform-origin: 0 100%;
+}
+
+/* kita  targetkan checkboxnya, atau saat checkboxnya
+diklik */
+.menu-toggle input:checked ~ span:nth-child(2){
+    background-color: white;
+    transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/*  cara bacanya, jadi ketika menu input yang ada pada class
+menu toggle kita checked/klik/tandai, cari css yang merupakan 
+siblings yang span dimana span itu anak kedua*/
+
+.menu-toggle input:checked ~ span:nth-child(4){
+    background-color: white;
+    transform: rotate(-45deg) translate(-1px, 0);
+}
+
+
+/* kita animasikan agar span yang ditengah menghilang */
+.menu-toggle input:checked ~ span:nth-child(3){
+    opacity: 0;
+    transform: scale(0);
+}
+
+
+/* SERVICES */
+.services{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax (200px, 1fr));
+    gap: 20px;
+}
+
+.service{
+    background-color: white;
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    box-shadow: 0 0 2px rgba(0,0,0,.3);
+}
+
+.service .icon{
+    font-size: 3em;
+}
+
+.service h3{
+    font-size: 1.5em;
+}
+
+.service p{
+    font-weight: 200;
+    letter-spacing: 1px;
+    font-size: .8em;
+}
+
+
+/* GALLERY */
+.gallery{
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 5px;
+}
+
+.gallery h2{
+    /* grid-column-start: 1;
+    grid-column-end: -1; */
+    grid-column:  1/-1;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/* RESPONSIVE BREAKPOINT */
+
+/* screen and tidak perlu ditulis jg hasilnya akan sama */
+@media screen and (max-width:1024px){
+    .menu{
+        order: inherit;
+        grid-template-columns: 1fr;
+    }
+
+    .menu .brand{
+        display: none;
+    }
+
+    .hero h2, .hero p{
+        display: block;
+        background-color: black;
+        color: white;
+        padding: 5px;
+        margin-bottom: 5px;
+    }
+
+    .hero {
+        display: flex;
+        align-items: start;
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width:768px){
+    .menu{
+        order: -1;
+        justify-items: end;
+    }
+    
+    
+    .menu-toggle{
+        display: flex;
+        /* ini untuk mengganti display none yang diatas */
+    }
+
+
+    /* nav ul dibawah untuk membuat slide di samping kanan */
+    .menu ul {
+        display: flex;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 80%;
+        height: 100vh;
+        justify-content: space-evenly;
+        flex-direction: column;
+        align-items: center;
+        background-color:#000;
+        z-index: 1;
+        /* kita turunkan kebawah nav ul yang samping kanan ini,
+        agar berada di bawah nav ul pada ukuran normal.
+        agar yang ini tidak menimpa  */
+        transform: translateY(-100%);
+        /* kita buat ada di kanan dengan translateX 100%,
+        lalu kita sembunyikan scrollnya dgn 
+        overflow x hidden pada body */
+        transition: all 1s;
+        opacity: 0;
+    }
+
+    .menu ul.slide {
+        opacity: 1;
+        transform: translateY(0);
+        /* artinya kalau ul punya kelas slide, balikan  posisi
+        translateX nya jadi 0. 0 ini nilai default/semula */
+    }
+    
+}
+@media screen and (max-width:600px){
+    body{
+        margin: 15px;
+    }
+    .header{
+        grid-template-areas: 
+        'hero'
+        'feature-1'
+        'feature-2';
+    }
+}
